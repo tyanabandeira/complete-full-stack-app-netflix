@@ -61,7 +61,7 @@ Array.from(trash).forEach(function(element) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            'name': name,
+            'name': name.trim(),
           })
         }).then(function (response) {
           window.location.reload()
