@@ -4,14 +4,40 @@ var plus = document.getElementsByClassName("fa-circle-plus")
 
 
 
+// Array.from(plus).forEach(function(element) {
+//   element.addEventListener('click', function(){
+//     const name = this.parentNode.parentNode.childNodes[1].innerText
+//     const msg = this.parentNode.parentNode.childNodes[3].innerText
+//     const genre = this.parentNode.parentNode.childNodes[5].innerText
+//     fetch('save', {
+//       method: 'post',
+//       headers: {'Content-Type': 'application/json'},
+//       body: JSON.stringify({
+//         'name': name.trim(),
+//         'msg': msg.trim(),
+//         'genre': genre.trim(),
+//       })
+//     })
+//     .then(response => {
+//       if (response.ok) return response.json()
+//     })
+//     .then(data => {
+//       console.log(data)
+//       window.location.reload(true)
+//     })
+//   });
+// });
+
 Array.from(plus).forEach(function(element) {
   element.addEventListener('click', function(){
     const name = this.parentNode.parentNode.childNodes[1].innerText
     const msg = this.parentNode.parentNode.childNodes[3].innerText
     const genre = this.parentNode.parentNode.childNodes[5].innerText
-    // console.log(this.closest('li').querySelector('.fa-thumbs-up'))
+    console.log(name)
+    console.log(msg)
+    console.log(genre)
     fetch('save', {
-      method: 'post',
+      method: 'put',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
         'name': name.trim(),
@@ -28,6 +54,8 @@ Array.from(plus).forEach(function(element) {
     })
   });
 });
+
+
 
 Array.from(heart).forEach(function(element) {
       element.addEventListener('click', function(){
@@ -54,14 +82,14 @@ Array.from(heart).forEach(function(element) {
 
 Array.from(trash).forEach(function(element) {
       element.addEventListener('click', function(){
-        const name = this.parentNode.parentNode.childNodes[1].innerText
+        const name = this.parentNode.parentNode.querySelector('.card-title').innerText
         fetch('messages', {
           method: 'delete',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            'name': name.trim(),
+            'name': name,
           })
         }).then(function (response) {
           window.location.reload()

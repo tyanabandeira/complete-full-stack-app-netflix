@@ -2,26 +2,27 @@
 <html>
 
 <head>
-  <title>21 Savage Fan Site</title>
+  <title>Netflix Reviews</title>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <link rel="stylesheet" href="style.css">
 
 </head>
 
-<body>
-  <div class="container">
+<body class="body">
 
-    <div class="page-header text-center">
-      <h1><span class="fa fa-popcorn"></span> Profile Page</h1>
-      <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-    </div>
 
-    <div class="row">
+  <div class="page-header text-center">
+    <h1 class="profile"></span> Profile Page</h1>
+    <button class="logout"> <a href="/logout">Logout</a></button>
+  </div>
 
-      <!-- LOCAL INFORMATION -->
-      <div class="col-sm-2">
-        <div class="well">
+
+
+  <!-- LOCAL INFORMATION -->
+
+  <!-- <div class="well">
           <h3><span class="fa fa-user"></span> Local</h3>
 
           <% if (user.local.email) { %>
@@ -36,112 +37,119 @@
               <a href="/connect/local" class="btn btn-default">Connect Local</a>
               <% } %>
 
+        </div> -->
+
+  <!--       
+      <div class="col-sm-6"> -->
+  <div class="inputArea">
+    <h3>Add a review</h3>
+    <% if (user.local.email) { %>
+      <form action="/messages" method="POST">
+        <label for="nameOfMovie">Name of Movie:</label>
+        <input for="nameOfMovie" type="text" placeholder="name" name="name">
+
+        <!-- <input type="text" placeholder="genre of movie" name="genre"> -->
+
+        <!-- <label for="pet-select">Choose a pet:</label> -->
+        
+        <select for="genreOfMovie" name="genre" id="genre-selection">
+          
+          <option value="">--choose a genre--</option>
+          <option value="action">Action</option>
+          <option value="anime">Anime</option>
+          <option value="blackStories">Black Stories</option>
+          <option value="childrenAndFamily">Children & Family</option>
+          <option value="classics">Classics</option>
+          <option value="comedies">Comedies</option>
+          <option value="crime">Crime</option>
+          <option value="Cult">Cult</option>
+          <option value="Documentaries">Documentaries</option>
+          <option value="Dramas">Dramas</option>
+          <option value="FaithAndSpirituality">Faith & Spirituality</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Horror">Horror</option>
+          <option value="Independent">Independent</option>
+          <option value="International">International</option>
+          <option value="LGBTQ">LGBQT</option>
+          <option value="MusicAndMusicals">Music & Musicals</option>
+          <option value="Romance">Romance</option>
+          <option value="Sci-Fi">Sci-Fi</option>
+          <option value="Shorts">Shorts</option>
+          <option value="Sports">Sports</option>
+          <option value="Stand-Up Comedy">Stand-Up Comedy</option>
+          <option value="Thriller">Thriller</option>
+        </select>
+
+        <label for="rates">How was the movie?</label>
+        <textarea for="rates" placeholder="Type here" name="msg"></textarea>
+        <!-- <input type="text" placeholder="message" name="msg"> -->
+        <button class="submitbtn" type="submit">Submit</button>
+      </form>
+
+
+
+  </div>
+
+  <% } %>
+
+
+
+  <h3>Reviews</h3>
+
+    <% for(var i=0; i<messages.length; i++) {%>
+      <% if(messages[i].favorite === false){ %>
+       
+        <div class="card " >
+          <div class="card-body ">
+            <h5 class="card-title"><%= messages[i].name %></h5>
+            <p class="card-text"> <%= messages[i].msg %></p>
+            <p class="card-text"> <%= messages[i].genre %></p>
+            <span><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+          <span><i class="fa fa-circle-plus" aria-hidden="true"></i></span>
         </div>
       </div>
       
-      <div class="col-sm-6">
+          <% } %>
 
-        <div class="reviewBox">
-        <h3>Reviews</h3>
-        <ul class="messages">
-          <% for(var i=0; i<messages.length; i++) {%>
-            <li class="message">
-              <span>
-                <%= messages[i].name %>
-              </span>
-              <span>
-                <%= messages[i].msg %>
-              </span>
-              <span>
-                <%= messages[i].genre %>
-              </span>
-              <span <%= messages[i].heart ? 'class = heart' : 'class = noHeart' %>><i class="fa fa-heart" aria-hidden="true"></i></span> 
-              <span><i class="fa fa-circle-plus" aria-hidden="true"></i></span>
-            </li>
-            <% } %>
-        </ul>
-</div>
+          <% } %>
+ 
 
-<ul class="messages">
   <h3>Favorites List</h3>
-  <% for(var i=0; i<saved.length; i++) {%>
-    <li class="message">
-      <span>
-        <%= saved[i].name %>
-      </span>
-      <span>
-        <%= saved[i].msg %>
-      </span>
-      <span>
-        <%= saved[i].genre %>
-      </span>
+          <% for(var i=0; i<messages.length; i++) {%>
+            <% if(messages[i].favorite === true){ %>
+         
+              <div class="card " >
+                <div class="card-body ">
+              <h5>Movie Title:</h5> <h5 class="card-title"><%= messages[i].name %></h5>
+                  <p class="card-text"> <%= messages[i].genre %></p>
+                   <p class="card-text"> <%= messages[i].msg %></p>
+                  <span><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+              </div>
+            </div>
+  
+      
+             
+                <% } %>
+      
+                <% } %>
 
-      <span><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-    
-    </li>
-    <% } %>
-</ul>
-
-
-
-        <div class="inputArea">
-        <h2>Add a review</h2>
-        <% if (user.local.email) { %>
-          <form action="/messages" method="POST">
-            <input type="text" placeholder="name" name="name">
-
-            <!-- <input type="text" placeholder="genre of movie" name="genre"> -->
-
-            <!-- <label for="pet-select">Choose a pet:</label> -->
-
-            <select name="genre" id="genre-selection">
-              <option value="">--choose a genre--</option>
-              <option value="action">Action</option>
-              <option value="anime">Anime</option>
-              <option value="blackStories">Black Stories</option>
-              <option value="childrenAndFamily">Children & Family</option>
-              <option value="classics">Classics</option>
-              <option value="comedies">Comedies</option>
-              <option value="crime">Crime</option>
-              <option value="Cult">Cult</option>
-              <option value="Documentaries">Documentaries</option>
-              <option value="Dramas">Dramas</option>
-              <option value="FaithAndSpirituality">Faith & Spirituality</option>
-              <option value="Fantasy">Fantasy</option>
-              <option value="Horror">Horror</option>
-              <option value="Independent">Independent</option>
-              <option value="International">International</option>
-              <option value="LGBTQ">LGBQT</option>
-              <option value="MusicAndMusicals">Music & Musicals</option>
-              <option value="Romance">Romance</option>
-              <option value="Sci-Fi">Sci-Fi</option>
-              <option value="Shorts">Shorts</option>
-              <option value="Sports">Sports</option>
-              <option value="Stand-Up Comedy">Stand-Up Comedy</option>
-              <option value="Thriller">Thriller</option>
-            </select>
-
-
-            <textarea placeholder="How was the movie..." name="msg"></textarea>
-            <!-- <input type="text" placeholder="message" name="msg"> -->
-            <button type="submit">Submit</button>
-          </form>
-
-</div>
+   
 
 
 
-      </div>
-      <% } %>
-
-    </div>
-    <!-- value="<%= user.local.email %>" -->
+            <!-- value="<%= user.local.email %>" -->
 
 
 
 
-    <script src="https://kit.fontawesome.com/6ca3447b7b.js" crossorigin="anonymous"></script>
-    <script src="main.js"></script>
+
+
+
+
+
+
+            <script src="https://kit.fontawesome.com/6ca3447b7b.js" crossorigin="anonymous"></script>
+            <script src="main.js"></script>
 
 </body>
 

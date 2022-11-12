@@ -8,18 +8,32 @@ module.exports = function(app, passport, db) {
     });
 
     // PROFILE SECTION =========================
-    app.get('/profile', isLoggedIn, function(req, res) {
-      db.collection('saved').find().toArray((err, saved) => {
+    // app.get('/profile', isLoggedIn, function(req, res) {
+    //   db.collection('saved').find().toArray((err, saved) => {
+    //     db.collection('messages').find().toArray((err, result) => {
+    //       if (err) return console.log(err)
+    //       res.render('profile.ejs', {
+    //         user : req.user,
+    //         messages: result,
+    //         // saved: saved
+    //       })
+    //       })
+    //     })
+    // });
+
+
+app.get('/profile', isLoggedIn, function(req, res) {
         db.collection('messages').find().toArray((err, result) => {
           if (err) return console.log(err)
           res.render('profile.ejs', {
             user : req.user,
             messages: result,
-            saved: saved
+            // saved: saved
           })
           })
         })
-    });
+
+
 
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
@@ -30,7 +44,7 @@ module.exports = function(app, passport, db) {
 // message board routes ===============================================================
 
     app.post('/messages', (req, res) => {
-      db.collection('messages').save({name: req.body.name, msg: req.body.msg, genre: req.body.genre, heart:false }, (err, result) => {
+      db.collection('messages').save({name: req.body.name, msg: req.body.msg, genre: req.body.genre, heart:false, favorite: false }, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
         res.redirect('/profile')
@@ -45,11 +59,25 @@ module.exports = function(app, passport, db) {
       })
     })
 
-    app.put('/messages', (req, res) => {
+    // app.put('/messages', (req, res) => {
+    //   db.collection('messages')
+    //   .findOneAndUpdate({name: req.body.name, msg: req.body.msg, genre: req.body.genre}, {
+    //     $set: {
+    //       thumbUp:req.body.thumbUp + 1
+    //     }
+    //   }, {
+    //     sort: {_id: -1},
+    //     upsert: true
+    //   }, (err, result) => {
+    //     if (err) return res.send(err)
+    //     res.send(result)
+    //   })
+    // })
+    app.put('/save', (req, res) => {
       db.collection('messages')
       .findOneAndUpdate({name: req.body.name, msg: req.body.msg, genre: req.body.genre}, {
         $set: {
-          thumbUp:req.body.thumbUp + 1
+         favorite: true
         }
       }, {
         sort: {_id: -1},
@@ -59,6 +87,7 @@ module.exports = function(app, passport, db) {
         res.send(result)
       })
     })
+    
     app.put('/heart', (req, res) => {
       db.collection('messages')
       .findOneAndUpdate({name: req.body.name}, {
@@ -76,7 +105,7 @@ module.exports = function(app, passport, db) {
 
 
     app.delete('/messages', (req, res) => {
-      db.collection('saved').findOneAndDelete({name: req.body.name}, (err, result) => {
+      db.collection('messages').findOneAndDelete({name: req.body.name}, (err, result) => {
         if (err) return res.send(500, err)
         res.send('Message deleted!')
       })
