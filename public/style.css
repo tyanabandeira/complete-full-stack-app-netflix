@@ -17,7 +17,7 @@ img {
 }
 
 .profile {
-  color: #B00710;
+  color: black;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
 }
@@ -127,7 +127,9 @@ h3{
   
 }
 
-
+.inputArea h3{
+  color:black;
+}
 
 /* 
 .inputArea{
