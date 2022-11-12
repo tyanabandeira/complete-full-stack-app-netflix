@@ -5,13 +5,9 @@
 <img width="600" alt="Screen Shot 2022-11-11 at 8 37 53 PM" src="https://user-images.githubusercontent.com/113194307/201450642-3ea12f62-1647-46da-9b89-4262558352e8.png">
 <img width="600" alt="Screen Shot 2022-11-11 at 8 38 09 PM" src="https://user-images.githubusercontent.com/113194307/201450660-9f4ad717-b28e-4504-ae60-0f8bf6ba7611.png">
 
-![Uploading Screen Shot 2022-11-11 at 8.38.09 PM.png…]()
 
-## Usage
+## Tech used
 
-1. run `node server.js`
-2. Navigate to `localhost:8080`
+HTML, CSS, JavaScript, Node.js, Express, MongoDB, EJS
 
-## Credit
 
-Modified from Scotch.io's auth tutorial
